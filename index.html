@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martin Maina | Design Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --text: #f1f1f1;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--highlight), #ff7a8a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--highlight);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 10% 20%, rgba(233, 69, 96, 0.1) 0%, rgba(26, 26, 46, 0) 40%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s forwards 0.3s;
+        }
+
+        .hero h1 span {
+            display: block;
+            color: var(--highlight);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s forwards 0.6s;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--accent), var(--highlight));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s forwards 0.9s;
+            box-shadow: 0 10px 20px rgba(233, 69, 96, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(233, 69, 96, 0.4);
+        }
+
+        .hero-graphics {
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45%;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .hero-graphics img {
+            width: 100%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--highlight);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            max-width: 700px;
+            margin: 20px auto 0;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            transform: translateY(50px);
+            opacity: 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .portfolio-item.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .portfolio-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .portfolio-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-img img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-info {
+            padding: 25px;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-info p {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .portfolio-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--highlight);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 20, 0.8);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--highlight), #ff7a8a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .copyright {
+            color: #777;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 120px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                padding-bottom: 50px;
+            }
+
+            .hero-graphics {
+                position: relative;
+                width: 80%;
+                right: 0;
+                top: 0;
+                transform: none;
+                margin: 0 auto;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Martin Maina</div>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#flyers">Flyers</a>
+                    <a href="#posters">Posters</a>
+                    <a href="#logos">Logos</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Creative Design <span>Portfolio</span></h1>
+                <p>Welcome to my design portfolio. I specialize in creating visually stunning flyers, posters, and logos that capture attention and communicate effectively. Each design is crafted with precision and creativity to meet your unique needs.</p>
+                <a href="#flyers" class="cta-button">View My Work</a>
+            </div>
+        </div>
+        <div class="hero-graphics">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cpath fill='%23e94560' d='M400,300 Q500,250 600,300 T800,300 L800,600 L0,600 L0,300 Q200,350 400,300'/%3E%3Ccircle fill='%23ffffff' opacity='0.1' cx='550' cy='200' r='80'/%3E%3Ccircle fill='%23ffffff' opacity='0.1' cx='250' cy='250' r='60'/%3E%3C/svg%3E" alt="Abstract Design">
+        </div>
+    </section>
+
+    <!-- Flyers Section -->
+    <section id="flyers" class="flyers-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Flyer Designs</h2>
+                <p>Eye-catching flyers designed for events, promotions, and announcements. Each design is tailored to maximize engagement and convey your message effectively.</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%231a1a2e' width='400' height='300'/%3E%3Crect fill='%23e94560' x='50' y='50' width='300' height='200' rx='10'/%3E%3Ccircle fill='%230f3460' cx='200' cy='150' r='50'/%3E%3Ctext fill='white' font-family='Arial' font-size='20' x='200' y='150' text-anchor='middle' dominant-baseline='middle'%3ESUMMER%3C/text%3E%3Ctext fill='white' font-family='Arial' font-size='20' x='200' y='180' text-anchor='middle' dominant-baseline='middle'%3EFESTIVAL%3C/text%3E%3C/svg%3E" alt="Summer Festival Flyer">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Summer Festival</h3>
+                        <p>Vibrant flyer design for a music festival featuring bold colors and dynamic typography.</p>
+                        <span class="portfolio-category">Flyer</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%230f3460' width='400' height='300'/%3E%3Crect fill='%231a1a2e' x='50' y='50' width='300' height='200' rx='10'/%3E%3Cpath fill='%23e94560' d='M100,100 L300,100 L200,220 Z'/%3E%3Ctext fill='white' font-family='Arial' font-size='20' x='200' y='130' text-anchor='middle' dominant-baseline='middle'%3ESALE%3C/text%3E%3Ctext fill='white' font-family='Arial' font-size='15' x='200' y='160' text-anchor='middle' dominant-baseline='middle'%3EUp to 50% Off%3C/text%3E%3C/svg%3E" alt="Fashion Sale Flyer">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Fashion Sale</h3>
+                        <p>Elegant flyer design for a boutique clothing sale with minimalist aesthetic.</p>
+                        <span class="portfolio-category">Flyer</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%2316213e' width='400' height='300'/%3E%3Crect fill='%23e94560' x='50' y='50' width='300' height='200' rx='10'/%3E%3Ccircle fill='%231a1a2e' cx='200' cy='150' r='40'/%3E%3Ctext fill='white' font-family='Arial' font-size='20' x='200' y='150' text-anchor='middle' dominant-baseline='middle'%3EART%3C/text%3E%3Ctext fill='white' font-family='Arial' font-size='15' x='200' y='180' text-anchor='middle' dominant-baseline='middle'%3EExhibition Opening%3C/text%3E%3C/svg%3E" alt="Art Exhibition Flyer">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Art Exhibition</h3>
+                        <p>Creative flyer for a contemporary art gallery opening with abstract elements.</p>
+                        <span class="portfolio-category">Flyer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Posters Section -->
+    <section id="posters" class="posters-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Poster Designs</h2>
+                <p>Striking posters that command attention. From movie promotions to event announcements, these designs make a statement.</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%231a1a2e' width='400' height='300'/%3E%3Crect fill='%230f3460' x='50' y='50' width='300' height='200' rx='10'/%3E%3Cpath fill='%23e94560' d='M150,100 L250,100 L250,200 L150,200 Z'/%3E%3Ctext fill='white' font-family='Arial' font-size='20' x='200' y='150' text-anchor='middle' dominant-baseline='middle'%3EFILM FEST%3C/text%3E%3C/svg%3E" alt="Film Festival Poster">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Film Festival</h3>
+                        <p>Cinematic poster design for an international film festival with dramatic visuals.</p>
+                        <span class="portfolio-category">Poster</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%230f3460' width='400' height='300'/%3E%3Crect fill='%231a1a2e' x='50' y='50' width='300' height='200' rx='10'/%3E%3Ccircle fill='%23e94560' cx='200' cy='150' r='60'/%3E%3Ctext fill='white' font-family='Arial' font-size='25' x='200' y='150' text-anchor='middle' dominant-baseline='middle'%3ECONCERT%3C/text%3E%3C/svg%3E" alt="Concert Night Poster">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Concert Night</h3>
+                        <p>Energetic poster for a live music event with vibrant colors and dynamic typography.</p>
+                        <span class="portfolio-category">Poster</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%2316213e' width='400' height='300'/%3E%3Crect fill='%23e94560' x='50' y='50' width='300' height='200' rx='10'/%3E%3Cpath fill='%231a1a2e' d='M150,100 L250,100 L200,220 Z'/%3E%3Ctext fill='white' font-family='Arial' font-size='20' x='200' y='150' text-anchor='middle' dominant-baseline='middle'%3ETECH TALK%3C/text%3E%3C/svg%3E" alt="Tech Conference Poster">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Tech Conference</h3>
+                        <p>Modern poster design for a technology conference with geometric elements.</p>
+                        <span class="portfolio-category">Poster</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logos Section -->
+    <section id="logos" class="logos-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Logo Designs</h2>
+                <p>Memorable logos that build brand identity. Each logo is crafted to represent the essence of the brand while being versatile and timeless.</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%231a1a2e' width='400' height='300'/%3E%3Ccircle fill='%23e94560' cx='200' cy='150' r='80'/%3E%3Ctext fill='white' font-family='Arial' font-size='40' font-weight='bold' x='200' y='160' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E" alt="Mountain Coffee Logo">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Mountain Coffee</h3>
+                        <p>Logo for a specialty coffee shop featuring mountain and coffee elements.</p>
+                        <span class="portfolio-category">Logo</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%230f3460' width='400' height='300'/%3E%3Cpath fill='%231a1a2e' d='M150,150 L250,150 L200,220 Z'/%3E%3Ccircle fill='%23e94560' cx='200' cy='130' r='20'/%3E%3C/svg%3E" alt="Zen Yoga Studio Logo">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Zen Yoga Studio</h3>
+                        <p>Minimalist logo for a yoga studio representing balance and tranquility.</p>
+                        <span class="portfolio-category">Logo</span>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%2316213e' width='400' height='300'/%3E%3Crect fill='%23e94560' x='150' y='100' width='100' height='100' rx='10'/%3E%3Crect fill='%231a1a2e' x='170' y='120' width='60' height='60' rx='5'/%3E%3C/svg%3E" alt="Pixel Tech Logo">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Pixel Tech</h3>
+                        <p>Modern tech company logo with pixel-inspired design elements.</p>
+                        <span class="portfolio-category">Logo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Martin Maina</div>
+                <p>Creative designer specializing in flyers, posters, and logos. Let's bring your vision to life.</p>
+                <div class="copyright">
+                    &copy; 2025 Martin Maina Design Portfolio. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate portfolio items on scroll
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            portfolioItems.forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
